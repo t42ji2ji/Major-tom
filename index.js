@@ -1,19 +1,30 @@
-const { LineBot } = require('bottender');
+const { LineBot, ConsoleBot } = require('bottender');
 const { createServer } = require('bottender/express');
 
 const config = require('./bottender.config.js').line;
+const handler = require('./handler');
 
-const bot = new LineBot({
-  accessToken: config.accessToken,
-  channelSecret: config.channelSecret,
-});
+const useConsole = false;
+const bot = useConsole
+  ? new ConsoleBot({ fallbackMethods: true })
+  : new LineBot({
+      accessToken: config.accessToken,
+      channelSecret: config.channelSecret,
+    });
 
-bot.onEvent(async context => {
-  await context.replyText('Hello World');
-});
+bot.setInitialState({
+  question_mode: false
+})
 
-const server = createServer(bot);
+bot.onEvent(handler)
 
-server.listen(process.env.PORT || 5000, () => {
-  console.log('server is running on 5000 port...');
-});
+if (useConsole) {
+  bot.createRuntime();
+} else {
+  const server = createServer(bot);
+  const port = process.env.PORT || 5000;
+
+  server.listen(port, () => {
+    console.log(`server is running on ${port} port...`);
+  });
+}
