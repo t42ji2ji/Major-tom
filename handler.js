@@ -1,7 +1,7 @@
 const { LineHandler } = require('bottender');
 
 const answers = require('./actions/answers');
-const offreply = '如果你不知道做什麼可以輸入"我要問問題"\n我可以幫你回答\n或是輸入"yee"查看本實驗室的最新實驗'
+const offreply = '如果你不知道做什麼\n可以輸入"我要問問題"\n我可以幫你回答\n輸入"yee"\n查看本實驗室的最新實驗'
 
 const init_hanlder = new LineHandler()
   .onText(/yee/i, async context => {
