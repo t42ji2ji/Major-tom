@@ -1,11 +1,11 @@
 const { LineHandler } = require('bottender');
 
 const answers = require('./actions/answers');
-const offreply = '如果你不知道做什麼\n可以輸入"我要問問題"\n我可以幫你回答\n輸入"yee"\n查看本實驗室的最新實驗'
+const offreply = '如果你不知道做什麼\n可以輸入"我要問問題"\n我可以幫你回答\n----------\n輸入"yee"\n查看本實驗室的最新實驗'
 
 const init_hanlder = new LineHandler()
   .onText(/yee/i, async context => {
-    await context.replyText('誰是畢卡索0x100085 \n可以畫貼圖送給朋友，並且實驗室會替你估價哦\nline://app/1611085252-Rl9xjJEY\n使用方法：\n1. 複製你喜歡的實驗室產品網址\n2. 貼到任何一個聊天室\n3. 點擊網址開始使用');
+    await context.replyText('誰是畢卡索 \uDBC0\uDC84 \n可以畫貼圖送給朋友，並且實驗室會替你估價哦\nline://app/1611085252-Rl9xjJEY\n使用方法：\n1. 複製你喜歡的實驗室產品網址\n2. 貼到任何一個聊天室\n3. 點擊網址開始使用');
   })
   .onText(/問題/, async context => {
     context.setState({
