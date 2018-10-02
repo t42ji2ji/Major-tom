@@ -8,5 +8,5 @@ module.exports = async (context, match) => {
       context.setState({
         question_mode: false
       });
-      await context.sendText(`${displayName}我告訴你：\n${randomItem}`);
+      await context.replyText(`${displayName}我告訴你：\n${randomItem}`);
   };
