@@ -6,12 +6,12 @@ module.exports = async (context, match) => {
         text: '喜愛程式與設計，提供世界好用又好看的服務。',
         actions: [
           {
-            type: 'postback',
+            type: 'uri',
             label: 'Medium文章',
             uri: 'https://medium.com/%E5%93%86%E5%95%A6%E5%AF%A6%E9%A9%97%E5%AE%A4',
           },
           {
-            type: 'postback',
+            type: 'uri',
             label: 'FB粉絲專頁',
             uri: 'https://www.facebook.com/doraralab/',
           },
