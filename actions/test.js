@@ -7,13 +7,8 @@ module.exports = async (context, match) => {
         actions: [
           {
             type: 'postback',
-            label: '粉絲專頁',
-            data: 'https://www.facebook.com/doraralab/',
-          },
-          {
-            type: 'uri',
-            label: '追蹤IG',
-            uri: 'https://www.instagram.com/doraralab/',
+            label: '測試',
+            data: 'action=buy&itemid=123',
           },
         ],
       });
