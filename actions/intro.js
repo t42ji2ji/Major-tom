@@ -7,7 +7,12 @@ module.exports = async (context, match) => {
         actions: [
           {
             type: 'postback',
-            label: '粉絲專頁',
+            label: 'Medium文章',
+            data: 'https://medium.com/%E5%93%86%E5%95%A6%E5%AF%A6%E9%A9%97%E5%AE%A4',
+          },
+          {
+            type: 'postback',
+            label: 'FB粉絲專頁',
             data: 'https://www.facebook.com/doraralab/',
           },
           {
