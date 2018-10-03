@@ -23,6 +23,11 @@ const init_hanlder = new LineHandler()
   .onText(/a*/, async context => {
     await context.replyText(offreply);
   })
+  .onEvent(async context =>{
+    if(context.event.isPostback){
+      await context.replyText(context.event.postback)
+    }
+  })
   .build();
 
 const question_handler = new LineHandler()
