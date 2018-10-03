@@ -8,12 +8,12 @@ module.exports = async (context, match) => {
           {
             type: 'postback',
             label: 'Medium文章',
-            data: 'https://medium.com/%E5%93%86%E5%95%A6%E5%AF%A6%E9%A9%97%E5%AE%A4',
+            uri: 'https://medium.com/%E5%93%86%E5%95%A6%E5%AF%A6%E9%A9%97%E5%AE%A4',
           },
           {
             type: 'postback',
             label: 'FB粉絲專頁',
-            data: 'https://www.facebook.com/doraralab/',
+            uri: 'https://www.facebook.com/doraralab/',
           },
           {
             type: 'uri',
