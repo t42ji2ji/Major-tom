@@ -17,7 +17,7 @@ const init_hanlder = new LineHandler()
     await context.replyText('哆啦室長\n擅長:網頁前端、平面UI|UX設計、插圖\n歡迎追蹤IG\nhttps://www.instagram.com/doraralab/');
   })
   .onText(/音樂/, async context =>{
-    
+    await context.replyText('https://www.youtube.com/watch?v=IawwUQP8ztI&start_radio=1&list=RDIawwUQP8ztI')
   })
   .onText(/a*/, async context => {
     await context.replyText(offreply);
