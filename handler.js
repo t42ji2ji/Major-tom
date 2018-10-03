@@ -25,7 +25,7 @@ const init_hanlder = new LineHandler()
   })
   .onEvent(async context =>{
     if(context.event.isPostback){
-      console.log("in POSTBACK", context.event.postback);
+      console.log("in POSTBACK", context.event.postback['data']);
       await context.replyText(" 132")
     }
   })
