@@ -3,6 +3,7 @@ const { LineHandler } = require('bottender');
 const answers = require('./actions/answers');
 const music = require('./actions/music');
 const test = require('./actions/test');
+const intro = require('./actions/intro')
 
 const offreply = '如果你不知道做什麼\n可以輸入"我要問問題"\n我可以幫你回答\n----------\n輸入"yee"\n查看本實驗室的最新實驗\n想了解更多請輸入"dora"'
 
@@ -16,9 +17,7 @@ const init_hanlder = new LineHandler()
     })
     await context.replyText('請開始問問題');
   })
-  .onText(/dora/, async context =>{
-    await context.replyText('哆啦室長\n擅長:網頁前端、平面UI|UX設計、插圖\n歡迎追蹤IG\nhttps://www.instagram.com/doraralab/');
-  })
+  .onText(/dora/, intro)
   .onText(/音樂/, music)
   .onText('test', test)
   .onText(/a*/, async context => {
