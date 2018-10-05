@@ -10,6 +10,11 @@ module.exports = async (context, match) => {
             label: '測試',
             data: 'action=buy&itemid=123',
           },
+          {
+            type: 'uri',
+            label: '2048',
+            uri: 'line://app/1612288634-0kXY3QDJ',
+          }
         ],
       });
   };

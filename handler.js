@@ -18,6 +18,9 @@ const init_hanlder = new LineHandler()
     await context.replyText('請開始問問題');
   })
   .onText(/dora/, intro)
+  .onText(/2048/, async context => {
+    await context.replyText("line://app/1612288634-0kXY3QDJ");
+  })
   .onText(/音樂/, music)
   .onText('test', test)
   .onText(/a*/, async context => {
