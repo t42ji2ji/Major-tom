@@ -29,6 +29,8 @@ const init_hanlder = new LineHandler()
     if(context.event.isPostback){
       console.log("in POSTBACK", context.event.postback['data']);
       const datas = context.event.postback['data'].split('&')
+      console.log(datas[0].split('=')[1] == 'game');
+      console.log(`1. 複製網址${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n歡迎點右邊頭像 推薦本熊給好友哦`);
       if(datas[0].split('=')[1] == 'game'){
         await replyText(`1. 複製網址${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n歡迎點右邊頭像 推薦本熊給好友哦`)
       }
