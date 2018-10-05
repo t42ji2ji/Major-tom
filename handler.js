@@ -3,14 +3,13 @@ const { LineHandler } = require('bottender');
 const answers = require('./actions/answers');
 const music = require('./actions/music');
 const test = require('./actions/test');
-const intro = require('./actions/intro')
+const intro = require('./actions/intro');
+const yee = require('./actions/yee');
 
 const offreply = '如果你不知道做什麼\n可以輸入"我要問問題"\n我可以幫你回答\n----------\n輸入"yee"\n查看本實驗室的最新實驗\n想了解更多請輸入"dora"'
 
 const init_hanlder = new LineHandler()
-  .onText(/yee/i, async context => {
-    await context.replyText('我是畢卡索 \uDBC0\uDC84 \n可以畫貼圖送給朋友，並且實驗室會替你估價哦\nline://app/1611085252-Rl9xjJEY\n使用方法：\n1. 複製你喜歡的實驗室產品網址\n2. 貼到任何一個聊天室\n3. 點擊網址開始使用');
-  })
+  .onText(/yee/i, yee)
   .onText(/問題/, async context => {
     context.setState({
         question_mode: true
@@ -29,7 +28,10 @@ const init_hanlder = new LineHandler()
   .onEvent(async context =>{
     if(context.event.isPostback){
       console.log("in POSTBACK", context.event.postback['data']);
-      await context.replyText(" 132")
+      const datas = context.event.postback['data'].split('&')
+      if(datas[0].split('=')[1] == 'game'){
+        await replyText(`1. 複製網址${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n歡迎點右邊頭像 推薦本熊給好友哦`)
+      }
     }
   })
   .build();
