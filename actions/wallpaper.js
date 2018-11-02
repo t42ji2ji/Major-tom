@@ -7,15 +7,15 @@ module.exports = async (context, match) => {
         ["萬聖節實驗室版", "https://i.imgur.com/8YyYR1r.png"],
         ["憂鬱的金水", "https://i.imgur.com/upiiFL1.jpg"], 
     ]
-    var ph_list = []
+    var ph_list = ""
     for(index in photos){
         var list = parseInt(index) + 1
-        ph_list.push(list + ". " + photos[index][0] + "\n")
+        ph_list = ph_list + list + ". " + photos[index][0] + "\n"
     }
     const { userId, displayName } = context.session.user;
     console.log(userId + displayName);
     if('123456'.indexOf(context.event.text) !== -1){
-        await context.replyText("喜歡的話記得在限時動態分享給我看哦")
+        //await context.replyText("喜歡的話記得在限時動態分享給我看哦")
         await context.replyImage({
             originalContentUrl: photos[parseInt(context.event.text)][1],
             previewImageUrl: photos[parseInt(context.event.text)][1]

@@ -28,7 +28,7 @@ const init_hanlder = new LineHandler()
         in_mode: true
     })
     await context.replyConfirmTemplate('this is a confirm template', {
-      text: '桌布請愛惜它並且不能用於商業用途哦',
+      text: '桌布請不要拿去商業使用哦！',
       actions: [
         {
           type: 'message',
