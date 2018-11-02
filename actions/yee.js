@@ -8,7 +8,7 @@ module.exports = async (context, match) => {
             actions: [
               {
                 type: 'postback',
-                label: '分享給朋友',
+                label: '跟朋友一起玩',
                 data: 'action=game&itemid=line://app/1611085252-Rl9xjJEY',
               },
               {
@@ -25,7 +25,7 @@ module.exports = async (context, match) => {
           actions: [
             {
               type: 'postback',
-              label: '分享給朋友',
+              label: '跟朋友一起玩',
               data: 'action=game&itemid=line://app/1612288634-0kXY3QDJ',
             },
             {
