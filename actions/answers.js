@@ -6,5 +6,5 @@ module.exports = async (context, match) => {
     const { userId, displayName } = context.session.user;
     console.log(userId + displayName);
 
-    await context.replyText(`${displayName}：\n${randomItem}\n -------\n如果要結束發問請輸入"結束"`);
+    await context.replyText(`${displayName}：\n${randomItem}\n -------\n結束發問請輸入"結束"`);
   };

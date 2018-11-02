@@ -71,9 +71,9 @@ const question_handler = new LineHandler()
         question_mode: false,
         in_mode: false
       });
-      const do_something = ["聽音樂", "玩遊戲", "去看看我的哀居", "還是很久沒更新的部落格"]
+      const do_something = ["聽音樂", "玩遊戲", "去看看我的IG", "很久沒更新的部落格"]
       var random_index = Math.floor(Math.random()*do_something.length)
-      await context.replyText(`問完問題以後，可以試試看${do_something[random_index]}`)
+      await context.replyText(`問完問題以後，可以試試看${do_something[random_index]}哦`)
     })
     .onText(/a*/, answers)
     .onEvent(async context => {
