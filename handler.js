@@ -28,7 +28,7 @@ const init_hanlder = new LineHandler()
         in_mode: true
     })
     await context.replyConfirmTemplate('this is a confirm template', {
-      text: '桌布小公約\n1. 喜歡桌布可以放到現實動態標註我哦\n2. 桌布禁止一切商業使用\n3. 有其他問題都可以直接私訊IG哦',
+      text: '桌布小公約\n1. 喜歡桌布可以放到限時動態標註我哦\n2. 桌布禁止一切商業使用\n3. 有其他使用上的問題都可以直接私訊IG哦',
       actions: [
         {
           type: 'message',
