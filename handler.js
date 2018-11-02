@@ -11,6 +11,9 @@ const wallpaper = require('./actions/wallpaper');
 const offreply = '如果你不知道做什麼\n可以輸入參考下面圖片的功能哦\n如果想了解我請輸入"dora"'
 
 const init_hanlder = new LineHandler()
+  .onText(/施工/, async context => {
+    await context.replyText('我在快了啦')
+  })
   .onText(/yee/i, yee)
   .onText(/問題/, async context => {
     context.setState({
@@ -25,7 +28,7 @@ const init_hanlder = new LineHandler()
         in_mode: true
     })
     await context.replyConfirmTemplate('this is a confirm template', {
-      text: 'Are you sure?',
+      text: '桌布請愛惜它並且不能用於商業用途哦',
       actions: [
         {
           type: 'message',
