@@ -5,16 +5,40 @@ const music = require('./actions/music');
 const test = require('./actions/test');
 const intro = require('./actions/intro');
 const yee = require('./actions/yee');
+const wallpaper = require('./actions/wallpaper');
 
-const offreply = '如果你不知道做什麼\n可以輸入"我要問問題"\n我可以幫你回答\n----------\n輸入"yee"\n查看本實驗室的最新實驗\n想了解更多請輸入"dora"'
+
+const offreply = '如果你不知道做什麼\n可以輸入參考下面圖片的功能哦\n如果想了解我請輸入"dora"'
 
 const init_hanlder = new LineHandler()
   .onText(/yee/i, yee)
   .onText(/問題/, async context => {
     context.setState({
-        question_mode: true
+        question_mode: true,
+        in_mode: true
     })
     await context.replyText('請開始問問題');
+  })
+  .onText(/桌布/, async context => {
+    await context.setState({
+        wallpaper_mode: true,
+        in_mode: true
+    })
+    await context.replyConfirmTemplate('this is a confirm template', {
+      text: 'Are you sure?',
+      actions: [
+        {
+          type: 'message',
+          label: '沒問題',
+          text: '沒問題',
+        },
+        {
+          type: 'message',
+          label: '做不到',
+          text: '做不到',
+        },
+      ],
+    });
   })
   .onText(/dora/, intro)
   .onText(/2048/, async context => {
@@ -30,19 +54,28 @@ const init_hanlder = new LineHandler()
       console.log("in POSTBACK", context.event.postback['data']);
       const datas = context.event.postback['data'].split('&')
       console.log(datas[0].split('=')[1] == 'game');
-      console.log(`1. 複製網址 ${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n歡迎點右邊頭像 推薦本熊給好友哦`);
+      console.log(`1. 複製網址 ${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n或者點右邊頭像 推薦本熊給好友哦`);
       if(datas[0].split('=')[1] == 'game'){
-        await context.replyText(`1. 複製網址${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n歡迎點右邊頭像 推薦本熊給好友哦`)
+        await context.replyText(`1. 複製網址 ${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n或者點右邊頭像 推薦本熊給好友哦`)
       }
     }
   })
   .build();
 
 const question_handler = new LineHandler()
-    .onText(/a*/, answers)
     .onText(/喜歡*/, async context =>{
-        await context.replyText("說喜不喜歡還太早了啦 \uDBC0\uDC84");
+      await context.replyText("說喜不喜歡還太早了啦 \uDBC0\uDC84");
     })
+    .onText(/結束*/, async context=>{
+      await context.setState({
+        question_mode: false,
+        in_mode: false
+      });
+      const do_something = ["聽音樂", "玩遊戲", "去看看我的哀居", "還是很久沒更新的部落格"]
+      var random_index = Math.floor(Math.random()*do_something.length)
+      await context.replyText(`問完問題以後，可以試試看${do_something[random_index]}`)
+    })
+    .onText(/a*/, answers)
     .onEvent(async context => {
         if (!context.event.isText) {
             await context.replyText('本熊只吃字');
@@ -50,9 +83,27 @@ const question_handler = new LineHandler()
     })
     .build();
 
+const wallper_handler = new LineHandler()
+  .onText(/^[0-9]*$/, wallpaper)
+  .onText(/沒問題/, wallpaper)
+  .onText(/做不到/, async context =>{
+    context.replyText('那88')
+    context.setState({
+        wallpaper_mode: false,
+        in_mode: false
+    })
+  })
+  .onEvent(async context => {
+      if (!context.event.isText) {
+          await context.replyText('本熊只吃字');
+      }
+  })
+  .build();
+
 module.exports = new LineHandler()
-  .on(context => !context.state.question_mode, init_hanlder)
+  .on(context => !context.state.in_mode, init_hanlder)
   .on(context => context.state.question_mode, question_handler)
+  .on(context => context.state.wallpaper_mode, wallper_handler)
   .build();
 
 
