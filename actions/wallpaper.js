@@ -16,9 +16,10 @@ module.exports = async (context, match) => {
     console.log(userId + displayName);
     if('123456'.indexOf(context.event.text) !== -1){
         //await context.replyText("喜歡的話記得在限時動態分享給我看哦")
+        var img_index = parseInt(context.event.text) + 1
         await context.replyImage({
-            originalContentUrl: photos[parseInt(context.event.text)][1],
-            previewImageUrl: photos[parseInt(context.event.text)][1]
+            originalContentUrl: photos[img_index][1],
+            previewImageUrl: photos[img_index][1]
           });
         await context.setState({
             wallpaper_mode: false,
