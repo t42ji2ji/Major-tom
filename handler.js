@@ -9,27 +9,27 @@ const intro = require('./actions/intro');
 const yee = require('./actions/yee');
 const wallpaper = require('./actions/wallpaper');
 
-const mongoose = require('mongoose');
-const http = require('http');
-const Schema = mongoose.Schema;
-var User_ModelSchema = new Schema({
-  username: String,
-  userid: String,
-  active: String
-});
+// const mongoose = require('mongoose');
+// const http = require('http');
+// const Schema = mongoose.Schema;
+// var User_ModelSchema = new Schema({
+//   username: String,
+//   userid: String,
+//   active: String
+// });
 
-let User = mongoose.model('User', User_ModelSchema);
-let db = mongoose.connection;
-let dbUrl = 'mongodb://heroku_34smc82j:836jqr8ffo6erv8ngmc6h32afn@ds249233.mlab.com:49233/heroku_34smc82j';
-db.on('error', function () {
-  console.log('error');
-});
-mongoose.connect(dbUrl, function (err) {
-  if (err) {
-    return console.log('there was a problem' + err);
-  }
-  console.log('mongo connected!');
-});
+// let User = mongoose.model('User', User_ModelSchema);
+// let db = mongoose.connection;
+// let dbUrl = 'mongodb://heroku_34smc82j:836jqr8ffo6erv8ngmc6h32afn@ds249233.mlab.com:49233/heroku_34smc82j';
+// db.on('error', function () {
+//   console.log('error');
+// });
+// mongoose.connect(dbUrl, function (err) {
+//   if (err) {
+//     return console.log('there was a problem' + err);
+//   }
+//   console.log('mongo connected!');
+// });
 
 var add_user = function(name , id, active) {
   var user = new User({
@@ -63,6 +63,7 @@ const init_hanlder = new LineHandler()
   .onText(/桌布/, async context => {
     const { userId, displayName } = context.session.user;
     await add_user(displayName, userId, "桌布")
+    
     await context.setState({
       wallpaper_mode: true,
       in_mode: true
@@ -97,8 +98,6 @@ const init_hanlder = new LineHandler()
     if (context.event.isPostback) {
       console.log("in POSTBACK", context.event.postback['data']);
       const datas = context.event.postback['data'].split('&')
-      console.log(datas[0].split('=')[1] == 'game');
-      console.log(`1. 複製網址 ${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n或者點右邊頭像 推薦本熊給好友哦`);
       if (datas[0].split('=')[1] == 'game') {
         await context.replyText(`1. 複製網址 ${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n或者點右邊頭像 推薦本熊給好友哦`)
       }

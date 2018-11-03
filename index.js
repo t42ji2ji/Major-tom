@@ -1,4 +1,4 @@
-const { LineBot, ConsoleBot } = require('bottender');
+const { LineBot, ConsoleBot, MongoSessionStore } = require('bottender');
 const { createServer } = require('bottender/express');
 
 const config = require('./bottender.config.js').line;
@@ -6,10 +6,24 @@ const handler = require('./handler');
 
 const useConsole = false;
 const bot = useConsole
-  ? new ConsoleBot({ fallbackMethods: true })
+  ? new ConsoleBot({ 
+    fallbackMethods: true,
+    sessionStore: new MongoSessionStore(
+      'mongodb://heroku_34smc82j:836jqr8ffo6erv8ngmc6h32afn@ds249233.mlab.com:49233/heroku_34smc82j',
+      {
+        collectionName: 'session',
+      }
+    )
+  })
   : new LineBot({
       accessToken: config.accessToken,
       channelSecret: config.channelSecret,
+      sessionStore: new MongoSessionStore(
+        'mongodb://heroku_34smc82j:836jqr8ffo6erv8ngmc6h32afn@ds249233.mlab.com:49233/heroku_34smc82j',
+        {
+          collectionName: 'session',
+        }, 10
+      )
     });
 
 bot.setInitialState({
