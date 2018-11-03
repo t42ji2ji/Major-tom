@@ -9,43 +9,6 @@ const intro = require('./actions/intro');
 const yee = require('./actions/yee');
 const wallpaper = require('./actions/wallpaper');
 
-// const mongoose = require('mongoose');
-// const http = require('http');
-// const Schema = mongoose.Schema;
-// var User_ModelSchema = new Schema({
-//   username: String,
-//   userid: String,
-//   active: String
-// });
-
-// let User = mongoose.model('User', User_ModelSchema);
-// let db = mongoose.connection;
-// let dbUrl = 'mongodb://heroku_34smc82j:836jqr8ffo6erv8ngmc6h32afn@ds249233.mlab.com:49233/heroku_34smc82j';
-// db.on('error', function () {
-//   console.log('error');
-// });
-// mongoose.connect(dbUrl, function (err) {
-//   if (err) {
-//     return console.log('there was a problem' + err);
-//   }
-//   console.log('mongo connected!');
-// });
-
-var add_user = function(name , id, active) {
-  var user = new User({
-    username: name,
-    userid: id,
-    active: active
-  });
-  user.save(function (error, data) {
-    if (error) {
-      console.log(error);
-    }
-    db.close();
-    process.exit();
-  });
-}
-
 const offreply = '如果你不知道做什麼\n可以輸入參考下面圖片的功能哦\n如果想了解我請輸入"dora"'
 
 const init_hanlder = new LineHandler()
@@ -61,9 +24,6 @@ const init_hanlder = new LineHandler()
     await context.replyText('請開始問問題');
   })
   .onText(/桌布/, async context => {
-    const { userId, displayName } = context.session.user;
-    await add_user(displayName, userId, "桌布")
-    
     await context.setState({
       wallpaper_mode: true,
       in_mode: true
@@ -91,8 +51,6 @@ const init_hanlder = new LineHandler()
   .onText('test', test)
   .onText(/a*/, async context => {
     await context.replyText(offreply);
-    const { userId, displayName } = context.session.user;
-    await add_user(displayName, userId, "nothing")
   })
   .onEvent(async context => {
     if (context.event.isPostback) {
