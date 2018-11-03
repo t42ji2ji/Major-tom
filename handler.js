@@ -15,6 +15,7 @@ const Schema = mongoose.Schema;
 var User_ModelSchema = new Schema({
   username: String,
   userid: String,
+  active: String
 });
 
 let User = mongoose.model('User', User_ModelSchema);
@@ -30,10 +31,11 @@ mongoose.connect(dbUrl, function (err) {
   console.log('mongo connected!');
 });
 
-var add_user = function(name , id) {
+var add_user = function(name , id, active) {
   var user = new User({
     username: name,
-    userid: id
+    userid: id,
+    active: active
   });
   user.save(function (error, data) {
     if (error) {
@@ -59,6 +61,8 @@ const init_hanlder = new LineHandler()
     await context.replyText('請開始問問題');
   })
   .onText(/桌布/, async context => {
+    const { userId, displayName } = context.session.user;
+    await add_user(displayName, userId, "桌布")
     await context.setState({
       wallpaper_mode: true,
       in_mode: true
@@ -87,7 +91,7 @@ const init_hanlder = new LineHandler()
   .onText(/a*/, async context => {
     await context.replyText(offreply);
     const { userId, displayName } = context.session.user;
-    await add_user(displayName, userId)
+    await add_user(displayName, userId, "nothing")
   })
   .onEvent(async context => {
     if (context.event.isPostback) {
