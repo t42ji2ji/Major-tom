@@ -1,4 +1,6 @@
-const { LineHandler } = require('bottender');
+const {
+  LineHandler
+} = require('bottender');
 
 const answers = require('./actions/answers');
 const music = require('./actions/music');
@@ -7,6 +9,40 @@ const intro = require('./actions/intro');
 const yee = require('./actions/yee');
 const wallpaper = require('./actions/wallpaper');
 
+const mongoose = require('mongoose');
+const http = require('http');
+const Schema = mongoose.Schema;
+var User_ModelSchema = new Schema({
+  username: String,
+  userid: String,
+});
+
+let User = mongoose.model('User', User_ModelSchema);
+let db = mongoose.connection;
+let dbUrl = 'mongodb://heroku_34smc82j:836jqr8ffo6erv8ngmc6h32afn@ds249233.mlab.com:49233/heroku_34smc82j';
+db.on('error', function () {
+  console.log('error');
+});
+mongoose.connect(dbUrl, function (err) {
+  if (err) {
+    return console.log('there was a problem' + err);
+  }
+  console.log('mongo connected!');
+});
+
+var add_user = function(name , id) {
+  var user = new User({
+    username: name,
+    userid: id
+  });
+  user.save(function (error, data) {
+    if (error) {
+      console.log(error);
+    }
+    db.close();
+    process.exit();
+  });
+}
 
 const offreply = '如果你不知道做什麼\n可以輸入參考下面圖片的功能哦\n如果想了解我請輸入"dora"'
 
@@ -17,20 +53,19 @@ const init_hanlder = new LineHandler()
   .onText(/yee/i, yee)
   .onText(/問題/, async context => {
     context.setState({
-        question_mode: true,
-        in_mode: true
+      question_mode: true,
+      in_mode: true
     })
     await context.replyText('請開始問問題');
   })
   .onText(/桌布/, async context => {
     await context.setState({
-        wallpaper_mode: true,
-        in_mode: true
+      wallpaper_mode: true,
+      in_mode: true
     })
     await context.replyConfirmTemplate('this is a confirm template', {
       text: '桌布小公約\n1. 喜歡桌布可以放到限時動態標註我哦\n2. 桌布禁止一切商業使用\n3. 有其他使用上的問題都可以直接私訊IG哦',
-      actions: [
-        {
+      actions: [{
           type: 'message',
           label: '沒問題',
           text: '沒問題',
@@ -51,14 +86,16 @@ const init_hanlder = new LineHandler()
   .onText('test', test)
   .onText(/a*/, async context => {
     await context.replyText(offreply);
+    const { userId, displayName } = context.session.user;
+    await add_user(displayName, userId)
   })
-  .onEvent(async context =>{
-    if(context.event.isPostback){
+  .onEvent(async context => {
+    if (context.event.isPostback) {
       console.log("in POSTBACK", context.event.postback['data']);
       const datas = context.event.postback['data'].split('&')
       console.log(datas[0].split('=')[1] == 'game');
       console.log(`1. 複製網址 ${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n或者點右邊頭像 推薦本熊給好友哦`);
-      if(datas[0].split('=')[1] == 'game'){
+      if (datas[0].split('=')[1] == 'game') {
         await context.replyText(`1. 複製網址 ${datas[1].split('=')[1]}\n2. 貼到聊天室\n------------\n或者點右邊頭像 推薦本熊給好友哦`)
       }
     }
@@ -66,43 +103,43 @@ const init_hanlder = new LineHandler()
   .build();
 
 const question_handler = new LineHandler()
-    .onText(/喜歡*/, async context =>{
-      await context.replyText("說喜不喜歡還太早了啦 \uDBC0\uDC84");
-    })
-    .onText(/魔鏡魔鏡誰是世界上最美的人/, async context =>{
-      await context.replyText("當然是我妹妹 \uDC84")
-    })
-    .onText(/結束*/, async context=>{
-      await context.setState({
-        question_mode: false,
-        in_mode: false
-      });
-      const do_something = ["聽音樂", "玩遊戲", "去看看我的IG", "很久沒更新的部落格"]
-      var random_index = Math.floor(Math.random()*do_something.length)
-      await context.replyText(`問完問題以後，可以試試看${do_something[random_index]}哦`)
-    })
-    .onText(/a*/, answers)
-    .onEvent(async context => {
-        if (!context.event.isText) {
-            await context.replyText('本熊只吃字');
-        }
-    })
-    .build();
+  .onText(/喜歡*/, async context => {
+    await context.replyText("說喜不喜歡還太早了啦 \uDBC0\uDC84");
+  })
+  .onText(/魔鏡魔鏡誰是世界上最美的人/, async context => {
+    await context.replyText("當然是我妹妹 \uDC84")
+  })
+  .onText(/結束*/, async context => {
+    await context.setState({
+      question_mode: false,
+      in_mode: false
+    });
+    const do_something = ["聽音樂", "玩遊戲", "去看看我的IG", "很久沒更新的部落格"]
+    var random_index = Math.floor(Math.random() * do_something.length)
+    await context.replyText(`問完問題以後，可以試試看${do_something[random_index]}哦`)
+  })
+  .onText(/a*/, answers)
+  .onEvent(async context => {
+    if (!context.event.isText) {
+      await context.replyText('本熊只吃字');
+    }
+  })
+  .build();
 
 const wallper_handler = new LineHandler()
-  .onText(/^[0-9]*$/, wallpaper)
   .onText(/沒問題/, wallpaper)
-  .onText(/做不到/, async context =>{
+  .onText(/做不到/, async context => {
     context.replyText('那88')
     context.setState({
-        wallpaper_mode: false,
-        in_mode: false
+      wallpaper_mode: false,
+      in_mode: false
     })
   })
+  .onText(/a*/, wallpaper)
   .onEvent(async context => {
-      if (!context.event.isText) {
-          await context.replyText('本熊只吃字');
-      }
+    if (!context.event.isText) {
+      await context.replyText('本熊只吃字');
+    }
   })
   .build();
 

@@ -7,6 +7,7 @@ module.exports = async (context, match) => {
         ["萬聖節實驗室版", "https://i.imgur.com/8YyYR1r.png"],
         ["憂鬱的金水", "https://i.imgur.com/upiiFL1.jpg"], 
     ]
+    console.log(match[0]);
     var ph_list = ""
     for(index in photos){
         var list = parseInt(index) + 1
@@ -14,7 +15,13 @@ module.exports = async (context, match) => {
     }
     const { userId, displayName } = context.session.user;
     console.log(userId + displayName);
-    if('123456'.indexOf(context.event.text) !== -1){
+    if(context.event.text == "0") {
+        await context.setState({
+            wallpaper_mode: false,
+            in_mode: false
+        })
+    }
+    else if('123456'.indexOf(context.event.text) !== -1){
         //await context.replyText("喜歡的話記得在限時動態分享給我看哦")
         var img_index = parseInt(context.event.text) - 1
         await context.replyImage({
@@ -26,6 +33,6 @@ module.exports = async (context, match) => {
             in_mode: false
         })
     } else {
-        await context.replyText(`hi! ${displayName}\n請輸入想要的桌布號碼:\n ${ph_list}\n`);
+        await context.replyText(`hi! ${displayName}\n請輸入想要的桌布號碼:\n ${ph_list} 或輸入"0"結束`);
     }
 };
