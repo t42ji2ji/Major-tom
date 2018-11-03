@@ -69,6 +69,9 @@ const question_handler = new LineHandler()
     .onText(/喜歡*/, async context =>{
       await context.replyText("說喜不喜歡還太早了啦 \uDBC0\uDC84");
     })
+    .onText(/魔鏡魔鏡誰是世界上最美的人/, async context =>{
+      await context.replyText("當然是我妹妹 \uDC84")
+    })
     .onText(/結束*/, async context=>{
       await context.setState({
         question_mode: false,
