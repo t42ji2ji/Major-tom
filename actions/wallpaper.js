@@ -6,6 +6,8 @@ module.exports = async (context, match) => {
         ["萬聖節萬聖節版", "https://i.imgur.com/XyMMiIa.png"],
         ["萬聖節實驗室版", "https://i.imgur.com/8YyYR1r.png"],
         ["憂鬱的金水", "https://i.imgur.com/upiiFL1.jpg"], 
+        ["好運旺旺來", "https://i.imgur.com/KJSAhGe.png"],
+        ["豬年大吉大利", "https://i.imgur.com/2jLdTCH.png"]
     ]
     console.log(match[0]);
     var ph_list = ""
