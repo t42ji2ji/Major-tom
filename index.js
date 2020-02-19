@@ -11,7 +11,7 @@ const config = require('./bottender.config.js').line;
 const handler = require('./handler');
 
 
-const useConsole = true;
+const useConsole = false;
 const bot = useConsole ?
   new ConsoleBot({
     fallbackMethods: true,
