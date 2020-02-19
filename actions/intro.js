@@ -1,9 +1,9 @@
 module.exports = async (context, match) => {
   await context.replyTemplate('this is a template', {
     type: 'buttons',
-    thumbnailImageUrl: 'https://instagram.ftpe7-4.fna.fbcdn.net/vp/948beb7aee8710b3aadf904a2cd13533/5C547A48/t51.2885-15/e35/33630528_178973942809157_3426440959318032384_n.jpg',
+    thumbnailImageUrl: 'https://i.imgur.com/5s1aSPM.png',
     title: 'Doraralab',
-    text: '實驗室的室長本人，用盡全力改變世界',
+    text: '實驗室的室長本人，一點一滴改變世界',
     actions: [{
         type: 'uri',
         label: 'Medium文章',
