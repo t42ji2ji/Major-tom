@@ -6,6 +6,9 @@
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
+  "engines": {
+    "node": "10.9.0"
+  },
   "dependencies": {
     "bottender": "0.15.7",
     "mongoose": "^5.3.9",
