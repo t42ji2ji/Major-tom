@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "bottender": "0.15.7",
-    "mongoose": "^5.3.9",
+    "mongoose": "^5.7.5",
     "nodemon": "1.18.4"
   }
 }
